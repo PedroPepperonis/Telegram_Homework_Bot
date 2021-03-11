@@ -1,11 +1,11 @@
 import logging
 import csv
 from aiogram import Bot, Dispatcher, executor, types
-
-TOKEN = '1291846106:AAEoo_HoGHFEGzBMvwf16quTyMvk-OirAzU'
+from aiogram.utils.executor import start_webhook
+from setting import (BOT_TOKEN, HEROKU_APP_NAME, WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_PORT, WEBAPP_HOST)
 
 logging.basicConfig(level=logging.INFO)
-bot = Bot(token=TOKEN)
+bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
 
@@ -25,5 +25,15 @@ async def send_homework(message: types.Message):
             if line['дата'] == message.text:
                 await message.answer(line['дата'] + ": " + line['задание'])
 
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+async def on_startup(dp):
+    await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
+
+def main():
+    start_webhook(
+        dispatcher=dp,
+        webhook_path=WEBHOOK_PATH,
+        skip_updates=True,
+        on_startup=on_startup,
+        host=WEBAPP_HOST,
+        port=WEBAPP_PORT,
+    )
