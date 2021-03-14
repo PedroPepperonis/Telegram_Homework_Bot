@@ -4,6 +4,7 @@ import csv
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.executor import start_webhook
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from setting import BOT_TOKEN
 
 # datetime
 from datetime import datetime
