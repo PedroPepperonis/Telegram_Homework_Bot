@@ -1,10 +1,16 @@
-#telegram
 import logging
-import csv
+import threading
+import asyncio
+
+# datebase
+from db import SQLite
+
+# telegram
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.executor import start_webhook
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from setting import BOT_TOKEN
+# telegram end
 
 # datetime
 from datetime import datetime
@@ -15,16 +21,13 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
+db = SQLite('db.db')
 
-""" сделать кнопки када нибудь
-# button
-today_button = InlineKeyboardButton('На сегодня', callback_data='/today')
-tomorrow_button = InlineKeyboardButton('На завтра', callback_data='/tomorrow')
-week_button = InlineKeyboardButton('На неделю', callback_data='/week')
-# button end
-
-markup1 = InlineKeyboardMarkup(resize_keyboard=True).add(today_button).add(tomorrow_button).add(week_button)
-"""
+@dp.message_handler(commands=['test'])
+async def test(message: types.Message):
+    users = db.get_status_notifications()
+    for i in users:
+        print(i[2])
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
@@ -55,22 +58,49 @@ async def week(message: types.Message):
         await message.answer(find_homework(week))
         i += 1
 
+@dp.message_handler(commands=['subscribe'])
+async def subscribe(message: types.Message):
+    if(not db.get_users_status_notifications(message.from_user.id)):
+        db.add_subscriber(message.from_user.id)
+    else:
+        db.update_subscription(message.from_user.id, True)
+    await message.answer("Вы успешно подписались на рассылку дз")
+
+@dp.message_handler(commands=['unsubscribe'])
+async def unsubscribe(message: types.Message):
+    if(not db.get_users_status_notifications(message.from_user.id)):
+        db.add_subscriber(message.from_user.id, False)
+        await message.answer('Вы итак не подписаны')
+    else:
+        db.update_subscription(message.from_user.id, False)
+        await message.answer('Вы успешно отписались от рассылки дз')
+
+# напоминание что нужно сделать дз
+async def notification(wait_for):
+    while True:
+        await asyncio.sleep(wait_for)
+        
+        users = db.get_status_notifications()
+
+        for i in users:
+            if (datetime.now().strftime("%H:%M") == i[2]):
+                tomorrow_date = (datetime.now() + timedelta(days=1)).strftime("%d.%m")
+                await bot.send_message(i[0], f'ДЗ на завтра\n{find_homework(tomorrow_date)}')
 
 # поиск дз по дате
 @dp.message_handler(regexp='^\d\d[.]\d\d$')
 async def send_homework(message: types.Message):
     await message.answer(find_homework(message.text))
 
-# поиск дз в файле
+# поиск дз в базе данных
 def find_homework(date):
-    with open('dz.csv', 'r', encoding='utf-8') as file:
-        reader = csv.DictReader(file, delimiter=',')
-        for line in reader:
-            if line['дата'] == date:
-                return (line['дата'] + ": " + line['задание'])
-
+    homework = db.get_homework(date)
+    for i in homework:
+        return (f'{i[0]}: {i[1]}')
 
 if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.create_task(notification(60))
     executor.start_polling(dp, skip_updates=True)
 
 
