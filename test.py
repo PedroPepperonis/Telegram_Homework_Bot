@@ -2,7 +2,9 @@ from db import SQLite
 
 db = SQLite('db.db')
 
-homework = db.get_user_notification()
+date = input("Дата: ")
+task = input("Задание: ")
 
-for i in homework:
-    print(i[0])
+db.add_homework(date, task)
+
+print("Задание добавлено")

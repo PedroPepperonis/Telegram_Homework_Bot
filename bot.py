@@ -1,5 +1,4 @@
 import logging
-import threading
 import asyncio
 
 # datebase
@@ -9,6 +8,9 @@ from db import SQLite
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.executor import start_webhook
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.dispatcher.filters.state import State, StatesGroup
+from aiogram.dispatcher import FSMContext
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from setting import BOT_TOKEN
 # telegram end
 
@@ -25,9 +27,7 @@ db = SQLite('db.db')
 
 @dp.message_handler(commands=['test'])
 async def test(message: types.Message):
-    users = db.get_status_notifications()
-    for i in users:
-        print(i[2])
+    db.add_message(message.from_user.id, message.from_user.username, message.from_user.full_name, message.text)
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
@@ -97,6 +97,19 @@ def find_homework(date):
     homework = db.get_homework(date)
     for i in homework:
         return (f'{i[0]}: {i[1]}')
+
+# добавление дз в базу данных
+"""class Add_Homework(StatesGroup):
+    answer = State()
+
+@dp.message_handler(commands=['add'])
+async def cmd_dialog(message: types.Message):
+    await Add_Homework.answer.set()
+    await message.answer('Дата:')
+
+@dp.message_handler(state=Add_Homework.answer)
+async def process_message(message: types.Message, state: FSMContext):
+    print(state)"""
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()

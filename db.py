@@ -6,6 +6,14 @@ class SQLite:
         self.connection = sqlite3.connect(datebase)
         self.cursor = self.connection.cursor()
 
+    def add_homework(self, date, task):
+        with self.connection:
+            return self.cursor.execute("INSERT INTO `dz` (`date`, `task`) VALUES(?, ?)", (date, task))
+
+    def add_message(self, user_id, username, full_name, msg):
+        with self.connection:
+            return self.cursor.execute("INSERT INTO `msg` (`user_id`, `username`, `full_name`, `msg`) VALUES(?, ?, ?, ?)", (user_id, username, full_name, msg))
+
     def get_homework(self, date):
         with self.connection:
             return self.cursor.execute("SELECT * FROM `dz` WHERE `date` = ?", (date,)).fetchall()
@@ -26,7 +34,6 @@ class SQLite:
     def update_subscription(self, user_id, status):
         with self.connection:
             return self.cursor.execute("UPDATE `notifications` SET `status` = ? WHERE `user_id` = ?", (status, user_id))
-
 
     def close(self):
         self.connection.close()
