@@ -148,6 +148,12 @@ async def add_task(message: types.Message, state: FSMContext):
     
     await state.finish()
 
+async def on_startup(dp):
+    await bot.set_webhook(WEBHOOK_URL)
+    logging.info(dp)
+
+async def on_shutdown(dp):
+    logging.info(dp)
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
@@ -155,6 +161,8 @@ if __name__ == '__main__':
     start_webhook(
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
+        on_startup=on_startup,
+        on_shutdown=on_shutdown,
         skip_updates=True,
         host=WEBAPP_HOST,
         port=WEBAPP_PORT,
