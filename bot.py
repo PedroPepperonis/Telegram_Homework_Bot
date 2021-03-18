@@ -7,6 +7,7 @@ from db import DataBase
 # telegram
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.executor import start_webhook
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -25,6 +26,7 @@ from datetime import timedelta
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
+dp.middleware.setup(LoggingMiddleware())
 
 db = DataBase(DATABASE_URL)
 
@@ -154,7 +156,6 @@ if __name__ == '__main__':
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
         skip_updates=True,
-        on_startup=None,
         host=WEBAPP_HOST,
         port=WEBAPP_PORT,
     )
