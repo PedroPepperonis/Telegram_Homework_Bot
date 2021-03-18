@@ -2,16 +2,19 @@ import logging
 import asyncio
 
 # datebase
-from db import SQLite
+from db import DataBase
 
 # telegram
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.executor import start_webhook
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from setting import BOT_TOKEN
+from setting import (BOT_TOKEN, HEROKU_APP_NAME,
+                        WEBHOOK_URL, WEBHOOK_PATH,
+                        WEBAPP_HOST, WEBAPP_PORT, DATABASE_URL)
 # telegram end
 
 # datetime
@@ -21,13 +24,14 @@ from datetime import timedelta
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher(bot, storage=MemoryStorage())
 
-db = SQLite('db.db')
+db = DataBase(DATABASE_URL)
 
 @dp.message_handler(commands=['test'])
 async def test(message: types.Message):
-    db.add_message(message.from_user.id, message.from_user.username, message.from_user.full_name, message.text)
+    print(message.from_user.id)
+
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
@@ -58,9 +62,10 @@ async def week(message: types.Message):
         await message.answer(find_homework(week))
         i += 1
 
+# сделать
 @dp.message_handler(commands=['subscribe'])
 async def subscribe(message: types.Message):
-    if(not db.get_users_status_notifications(message.from_user.id)):
+    if(not db.get_subscription_status(message.from_user.id)):
         db.add_subscriber(message.from_user.id)
     else:
         db.update_subscription(message.from_user.id, True)
@@ -68,7 +73,7 @@ async def subscribe(message: types.Message):
 
 @dp.message_handler(commands=['unsubscribe'])
 async def unsubscribe(message: types.Message):
-    if(not db.get_users_status_notifications(message.from_user.id)):
+    if(not db.get_subscription_status(message.from_user.id)):
         db.add_subscriber(message.from_user.id, False)
         await message.answer('Вы итак не подписаны')
     else:
@@ -80,12 +85,13 @@ async def notification(wait_for):
     while True:
         await asyncio.sleep(wait_for)
         
-        users = db.get_status_notifications()
+        users = db.get_status(True)
+        db.time(628447199, '21:28')
 
         for i in users:
-            if (datetime.now().strftime("%H:%M") == i[2]):
+            if (datetime.now().strftime("%H:%M") == i[0]):
                 tomorrow_date = (datetime.now() + timedelta(days=1)).strftime("%d.%m")
-                await bot.send_message(i[0], f'ДЗ на завтра\n{find_homework(tomorrow_date)}')
+                await bot.send_message(i[2], f'ДЗ на завтра\n{find_homework(tomorrow_date)}')
 
 # поиск дз по дате
 @dp.message_handler(regexp='^\d\d[.]\d\d$')
@@ -99,22 +105,59 @@ def find_homework(date):
         return (f'{i[0]}: {i[1]}')
 
 # добавление дз в базу данных
-"""class Add_Homework(StatesGroup):
-    answer = State()
+class Add_Homework(StatesGroup):
+    date = State()
+    task = State()
 
 @dp.message_handler(commands=['add'])
-async def cmd_dialog(message: types.Message):
-    await Add_Homework.answer.set()
-    await message.answer('Дата:')
+async def add_homework(message: types.Message):
+    if message.from_user.id == 628447199:
+        await Add_Homework.date.set()
+        await message.answer('Дата:')
+    else:
+        await message.answer('У вас нет прав для использования этой комманды')
 
-@dp.message_handler(state=Add_Homework.answer)
-async def process_message(message: types.Message, state: FSMContext):
-    print(state)"""
+@dp.message_handler(state='*', commands=['cancel'])
+@dp.message_handler(Text(equals='cancel', ignore_case=True), state='*')
+async def cancel(message: types.Message, state: FSMContext):
+    current_state = state.get_state()
+    if current_state is None:
+        return
+
+    await state.finish()
+    await message.answer('Отмена...')
+
+@dp.message_handler(state=Add_Homework.date)
+async def add_date(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['date'] = message.text
+
+    await Add_Homework.next()
+    await message.answer('Задание:')
+
+@dp.message_handler(state=Add_Homework.task)
+async def add_task(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['task'] = message.text
+
+        db.add_homework(data['date'], data['task'])
+
+        await message.answer('Домашнее задание успешно добавлено в базу данных!')
+    
+    await state.finish()
+
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.create_task(notification(60))
-    executor.start_polling(dp, skip_updates=True)
+    start_webhook(
+        dispatcher=dp,
+        webhook_path=WEBHOOK_PATH,
+        skip_updates=True,
+        on_startup=None,
+        host=WEBAPP_HOST,
+        port=WEBAPP_PORT,
+    )
 
 
 # сделать поиск дз в отдельную функцию и в отдельном файле

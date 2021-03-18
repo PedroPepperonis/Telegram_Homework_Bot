@@ -10,7 +10,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1aba2d28-a89f-472d-bd96-ad188a795058" name="Default Changelist" comment="" />
+    <list default="true" id="1aba2d28-a89f-472d-bd96-ad188a795058" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/TelegramBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TelegramBot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/setting.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +32,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JupyterTrust" id="7e1e169c-8c87-457f-9d81-58115a31de54" />
   <component name="ProjectId" id="1fXUsxLOQWbkA5hO461de51rmpS" />
@@ -35,8 +43,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../WindowsScripts" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.EditorConfig" />
   </component>
   <component name="RunManager" selected="Python.bot">
     <configuration name="bot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -118,55 +128,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="309" y="42" key="#Inspections" timestamp="1596395602457">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="309" y="42" key="#Inspections/0.0.1366.728@0.0.1366.728" timestamp="1596395602457" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1596400262960">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1596400262960" />
-    <state width="1323" height="79" key="GridCell.Tab.0.bottom" timestamp="1596400019936">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="79" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1596400019936" />
-    <state width="1323" height="79" key="GridCell.Tab.0.center" timestamp="1596400019935">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="79" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1596400019935" />
-    <state width="1323" height="79" key="GridCell.Tab.0.left" timestamp="1596400019934">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="79" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1596400019934" />
-    <state width="1323" height="79" key="GridCell.Tab.0.right" timestamp="1596400019936">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="79" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1596400019936" />
-    <state width="1323" height="223" key="GridCell.Tab.1.bottom" timestamp="1596369271237">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1596369271237" />
-    <state width="1323" height="223" key="GridCell.Tab.1.center" timestamp="1596369271237">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1596369271237" />
-    <state width="1323" height="223" key="GridCell.Tab.1.left" timestamp="1596369271236">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1596369271236" />
-    <state width="1323" height="223" key="GridCell.Tab.1.right" timestamp="1596369271237">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1596369271237" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1596394609478">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1596394609478" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TelegramBot$bot.coverage" NAME="bot Coverage Results" MODIFIED="1596400019889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/TelegramBot$test_bot.coverage" NAME="test_bot Coverage Results" MODIFIED="1596397235442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
