@@ -44,7 +44,7 @@ async def start(message: types.Message):
 
 @dp.message_handler(commands=['help'])
 async def help(message: types.Message):
-    await message.answer('Короче, я отправляю дз.\n/today - дз на сегодня\n/tomorrow - дз на завтра\n/week - дз на неделю вперед\n/subscribe - подписаться на уведомления о дз\n/unsubscribe - отписаться от уведомлений\n/time - выбрать время когда будут приходить уведомления\n/n - узнать время когда мне приходят уведомления')
+    await message.answer('Короче, я отправляю дз.\n/today - дз на сегодня\n/tomorrow - дз на завтра\n/week - дз на неделю вперед\n/subscribe - подписаться на уведомления о дз\n/unsubscribe - отписаться от уведомлений\n/time - выбрать время когда будут приходить уведомления\n/n - узнать время когда мне приходят уведомления\nТакже можно ввести дату вручную типа так 20.03')
 
 # дз на сегодня
 @dp.message_handler(commands=['today'])
@@ -68,7 +68,7 @@ async def tomorrow(message: types.Message):
 @dp.message_handler(commands=['week'])
 async def week(message: types.Message):
     i = 0
-    while i < 7:
+    while i <= 7:
         week = (datetime.now() + timedelta(days=i)).strftime("%d.%m")
         try:
             await message.answer(find_homework(week))
@@ -197,7 +197,7 @@ async def get_date(message: types.Message):
         await Update_Homework.date.set()
         await message.answer('Дата:')
     else:
-        message.answer('У вас нет доступа к этой команде')
+        await message.answer('У вас нет доступа к этой команде')
 
 @dp.message_handler(state=Update_Homework.date)
 async def set_date(message: types.Message, state: FSMContext):
