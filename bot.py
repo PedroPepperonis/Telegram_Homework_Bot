@@ -89,7 +89,7 @@ async def send_homework(message: types.Message):
 async def subscribe(message: types.Message):
     if message.chat.type == 'group':
         if(not db.get_subscription_status(message.chat.id)):
-            db.add_subscriber(message.chat.id, message.chat.full_name, '15:00')
+            db.add_subscriber(message.chat.id)
         else:
             db.update_subscription(message.chat.id, True)
             db.time(message.chat.id, '15:00')
@@ -97,7 +97,7 @@ async def subscribe(message: types.Message):
     
     if message.chat.type == 'private':
         if(not db.get_subscription_status(message.from_user.id)):
-            db.add_subscriber(message.from_user.id, message.from_user.full_name, '15:00')
+            db.add_subscriber(message.from_user.id)
         else:
             db.update_subscription(message.from_user.id, True)
         await message.answer("Вы успешно подписались на рассылку дз")
@@ -110,7 +110,7 @@ async def unsubscribe(message: types.Message):
     
     if message.chat.type == 'private':
         if(not db.get_subscription_status(message.from_user.id)):
-            db.add_subscriber(message.from_user.id, message.from_user.full_name, False)
+            db.add_subscriber(message.from_user.id, False)
             await message.answer('Вы итак не подписаны')
         else:
             db.update_subscription(message.from_user.id, False)
