@@ -249,7 +249,7 @@ async def on_shutdown(dp):
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.create_task(notification(TIMER))
+    loop.create_task(notification(int(TIMER)))
     start_webhook(
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
