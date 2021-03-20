@@ -36,9 +36,9 @@ class DataBase:
             self.cursor.execute("SELECT * FROM Subscriptions WHERE user_id = %s", (user_id, ))
             return self.cursor.fetchall()
 
-    def add_subscriber(self, user_id, username, time, status = True):
+    def add_subscriber(self, user_id, time = '15:00', status = True):
         with self.connection:
-            return self.cursor.execute("INSERT INTO Subscriptions(user_id, username, time, status) VALUES(%s, %s, %s, %s)", (user_id, username, time, status))
+            return self.cursor.execute("INSERT INTO Subscriptions(user_id, time, status) VALUES(%s, %s, %s)", (user_id, time, status))
 
     def update_subscription(self, user_id, status):
         with self.connection:
