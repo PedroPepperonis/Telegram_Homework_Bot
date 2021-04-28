@@ -1,11 +1,12 @@
-import os
 import psycopg2
+from psycopg2.extras import DictCursor
+
 
 class DataBase:
 
     def __init__(self, database):
         self.connection = psycopg2.connect(database, sslmode='require')
-        self.cursor = self.connection.cursor()
+        self.cursor = self.connection.cursor(cursor_factory=DictCursor)
     
     def add_homework(self, date, task):
         with self.connection:
@@ -31,7 +32,7 @@ class DataBase:
             self.cursor.execute("SELECT * FROM Subscriptions WHERE status = %s", (status, ))
             return self.cursor.fetchall()
 
-    def get_notif_time(self, user_id):
+    def get_notification_time(self, user_id):
         with self.connection:
             self.cursor.execute("SELECT * FROM Subscriptions WHERE user_id = %s", (user_id, ))
             return self.cursor.fetchall()
