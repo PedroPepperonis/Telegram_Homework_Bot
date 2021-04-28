@@ -12,17 +12,13 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.utils.exceptions import MessageTextIsEmpty
-# from config.config import (BOT_TOKEN, HEROKU_APP_NAME,
-#                     WEBHOOK_URL, WEBHOOK_PATH,
-#                     WEBAPP_HOST, WEBAPP_PORT, DATABASE_URL,
-#                     TIMER)
+from aiogram.utils.executor import start_webhook
 
+from config.config import BOT_TOKEN, WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT, DATABASE_URL, TIMER
 from database.db import DataBase
 
-DATABASE_URL = 'postgres://xtnkefldcyslwo:9892716013df510c9b4ffc3489790a8223e74037232d504a12319b86ace6ffcf@ec2-54-73-147-133.eu-west-1.compute.amazonaws.com:5432/d306gfjbu4tvu8'
-
 logging.basicConfig(level=logging.INFO)
-bot = Bot(token='1291846106:AAEoo_HoGHFEGzBMvwf16quTyMvk-OirAzU')
+bot = Bot(BOT_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 db = DataBase(DATABASE_URL)
@@ -261,17 +257,19 @@ async def edit_time(message: types.Message, state: FSMContext):
     await state.finish()
 
 
-"""async def on_startup(dp):
+async def on_startup(dp):
     await bot.set_webhook(WEBHOOK_URL)
     logging.info(dp)
 
+
 async def on_shutdown(dp):
-    logging.info(dp)"""
+    logging.info(dp)
+
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.create_task(notification(10))
-    """start_webhook(
+    loop.create_task(notification(int(TIMER)))
+    start_webhook(
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
         on_startup=on_startup,
@@ -279,5 +277,4 @@ if __name__ == '__main__':
         skip_updates=True,
         host=WEBAPP_HOST,
         port=WEBAPP_PORT,
-    )"""
-    executor.start_polling(dp, skip_updates=True)
+    )

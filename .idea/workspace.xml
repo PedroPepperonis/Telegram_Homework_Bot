@@ -14,10 +14,7 @@
       <change beforePath="$PROJECT_DIR$/../PasswordManager/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PasswordManager/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PasswordManager/db/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PasswordManager/db/db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PasswordManager/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PasswordManager/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../test/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,6 +53,12 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.EditorConfig" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Programming\Python\TelegramBot\config" />
+      <recent name="E:\Programming\Python\TelegramBot\database" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.bot">
     <configuration name="bot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -150,6 +153,7 @@
       <workItem from="1617865666725" duration="56000" />
       <workItem from="1618382252736" duration="1599000" />
       <workItem from="1619639550695" duration="5738000" />
+      <workItem from="1619645354734" duration="691000" />
     </task>
     <servers />
   </component>
